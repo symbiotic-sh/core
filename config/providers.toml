@@ -1,0 +1,67 @@
+# AI Provider Configuration
+#
+# API keys are NOT stored here — they live in the credential vault,
+# collected by the setup wizard or `symbiotic vault put <provider>`.
+# The `auth = "vault"` default means: look up the key by provider name.
+
+# Optional: only required for LLM tier features (Distillery, reasoning, advanced features).
+# Not needed for the base tier (Conduit + daemon + Auth Script Engine).
+[providers.ollama]
+class = "local"
+url = "http://localhost:11434"
+auth = "none"
+models = ["qwen3.5", "nomic-embed-text"]
+
+[providers.openai]
+class = "cloud"
+models = ["gpt-4o-mini", "text-embedding-3-small", "dall-e-3"]
+
+[providers.anthropic]
+class = "cloud"
+type = "anthropic"
+models = ["claude-sonnet-4-20250514"]
+
+[providers.openrouter]
+class = "aggregator"
+type = "openai-compat"
+url = "https://openrouter.ai/api/v1"
+models = ["meta-llama/llama-3.1-70b", "anthropic/claude-sonnet-4-20250514"]
+
+[providers.venice]
+class = "aggregator"
+type = "openai-compat"
+url = "https://api.venice.ai/api/v1"
+models = ["llama-3.3-70b"]
+
+[providers.higgsfield]
+class = "cloud"
+capabilities = ["video_generation", "image_generation"]
+
+[providers.nanobanana]
+class = "cloud"
+capabilities = ["image_generation"]
+
+[providers.runway]
+class = "cloud"
+capabilities = ["video_generation"]
+
+[providers.flux]
+class = "cloud"
+url = "https://fal.run"
+capabilities = ["image_generation"]
+
+[providers.claude-code]
+class = "cloud"
+type = "agent"
+capabilities = ["agent_execution", "completion", "function_call", "vision"]
+
+[providers.codex]
+class = "cloud"
+type = "agent"
+capabilities = ["agent_execution", "completion"]
+
+[defaults]
+completion = "ollama"
+embedding = "ollama"
+image_generation = "openai"
+agent_execution = "claude-code"

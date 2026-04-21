@@ -1,0 +1,12 @@
+[package]
+name = "symbiotic-review"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Archive review store and summary extraction for Symbiotic MVP"
+
+[dependencies]
+anyhow.workspace = true
+symbiotic-core = { path = "../symbiotic-core" }
+thiserror.workspace = true

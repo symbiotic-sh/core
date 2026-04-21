@@ -1,0 +1,12 @@
+[package]
+name = "symbiotic-queue"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Durable queue primitives for Symbiotic daemon workers"
+
+[dependencies]
+anyhow.workspace = true
+symbiotic-core = { path = "../symbiotic-core" }
+thiserror.workspace = true

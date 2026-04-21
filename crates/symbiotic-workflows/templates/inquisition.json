@@ -1,0 +1,23 @@
+{
+  "id": "wf-inquisition",
+  "name": "inquisition",
+  "version": "1.0",
+  "inputs": {
+    "user_goal": "Natural language goal description",
+    "prior_answers": "JSON array of prior Q&A rounds (empty on first run)"
+  },
+  "policy": {
+    "sensitivity_max": "restricted",
+    "model_class": "cloud"
+  },
+  "steps": [
+    {
+      "id": "clarify",
+      "step_type": "agent.execute",
+      "config": {
+        "timeout_seconds": "300"
+      },
+      "agent_role": "inquisitor"
+    }
+  ]
+}

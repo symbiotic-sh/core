@@ -1,0 +1,16 @@
+{
+  "name": "@symbiotic/auth-scripts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Per-site Playwright login scripts for Symbiotic credential sandbox",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "playwright": "^1.42.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.0",
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,0 +1,43 @@
+{$SYMBIOTIC_MATRIX_PUBLIC_DOMAIN} {
+    encode zstd gzip
+
+    # Matrix well-known delegation (server_name differs from served domain)
+    handle /.well-known/matrix/server {
+        respond `{"m.server": "{$SYMBIOTIC_MATRIX_PUBLIC_DOMAIN}:443"}` 200 {
+            close
+        }
+        header Content-Type application/json
+    }
+
+    handle /.well-known/matrix/client {
+        respond `{"m.homeserver": {"base_url": "https://{$SYMBIOTIC_MATRIX_PUBLIC_DOMAIN}"}}` 200 {
+            close
+        }
+        header Content-Type application/json
+        header Access-Control-Allow-Origin *
+    }
+
+    # CORS headers for Matrix client API
+    header /_matrix/* {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "X-Requested-With, Content-Type, Authorization"
+    }
+
+    # Terminal streaming (ttyd) — basic auth + WebSocket
+    handle /term/* {
+        basicauth {
+            # Replace hash: caddy hash-password --plaintext 'yourpassword'
+            admin $2a$14$PLACEHOLDER_HASH_REPLACE_ME
+        }
+        uri strip_prefix /term
+        reverse_proxy ttyd:7681
+    }
+
+    # Archive HTTP API (daemon archive sync for mobile app)
+    handle /api/* {
+        reverse_proxy daemon:8090
+    }
+
+    reverse_proxy conduwuit:8008
+}

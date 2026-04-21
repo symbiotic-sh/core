@@ -1,0 +1,1 @@
+Hello‮ this string contains a RLO bidi-override character that visually reverses the rest of the line, a classic Trojan Source attack.

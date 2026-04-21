@@ -1,0 +1,22 @@
+[package]
+name = "symbiotic-skills"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Skills system with TOML manifests and trust gating for Symbiotic"
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+symbiotic-agents = { path = "../symbiotic-agents" }
+symbiotic-trust = { path = "../symbiotic-trust" }
+thiserror.workspace = true
+tokio.workspace = true
+toml.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+tokio = { workspace = true, features = ["full", "test-util"] }

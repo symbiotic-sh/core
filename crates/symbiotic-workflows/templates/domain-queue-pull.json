@@ -1,0 +1,20 @@
+{
+  "id": "wf-domain-queue-pull",
+  "name": "domain-queue-pull",
+  "version": "1.0",
+  "inputs": {},
+  "policy": {
+    "sensitivity_max": "shareable",
+    "model_class": "local"
+  },
+  "steps": [
+    {
+      "id": "pull",
+      "step_type": "domain.queue.pull",
+      "config": {
+        "domain": "marketing",
+        "queue": "active"
+      }
+    }
+  ]
+}

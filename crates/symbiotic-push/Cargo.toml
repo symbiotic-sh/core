@@ -1,0 +1,48 @@
+[package]
+name = "symbiotic-push"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Push notification delivery for Symbiotic — APNs, FCM, token management, and dispatch"
+
+[features]
+test-util = ["dep:wiremock", "dep:ring", "dep:rsa", "dep:rand", "dep:rand_core_06", "dep:urlencoding"]
+
+[dependencies]
+async-trait.workspace = true
+base64 = "0.22"
+chrono.workspace = true
+jsonwebtoken = "9"
+reqwest.workspace = true
+rusqlite.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+# Optional deps for test-util feature
+wiremock = { workspace = true, optional = true }
+ring = { version = "0.17", optional = true }
+# rsa 0.9: RUSTSEC-2023-0071 (Marvin Attack) — limited impact here since rsa is used
+# for push token encryption only, not TLS. No patched 0.9.x release available yet.
+rsa = { version = "0.9", features = ["pem"], optional = true }
+rand = { version = "0.10", optional = true }
+rand_core_06 = { package = "rand_core", version = "0.6", optional = true }
+urlencoding = { version = "2", optional = true }
+
+[dev-dependencies]
+ring = "0.17"
+# rsa 0.9: RUSTSEC-2023-0071 — see comment above in [dependencies]
+rsa = { version = "0.9", features = ["pem"] }
+rand = "0.10"
+rand_core_06 = { package = "rand_core", version = "0.6" }
+tempfile.workspace = true
+tokio = { workspace = true, features = ["full", "test-util"] }
+wiremock.workspace = true
+urlencoding = "2"
+
+[[test]]
+name = "push_integration"
+required-features = ["test-util"]

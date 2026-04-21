@@ -1,0 +1,31 @@
+[package]
+name = "symbiotic-intake"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Unified intake pipeline for Symbiotic"
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+serde = { workspace = true, features = ["derive"] }
+serde_json.workspace = true
+serde_yml.workspace = true
+sha2.workspace = true
+symbiotic-agents = { version = "0.1.0", path = "../symbiotic-agents" }
+symbiotic-archive = { path = "../symbiotic-archive" }
+symbiotic-context = { path = "../symbiotic-context" }
+symbiotic-core = { path = "../symbiotic-core" }
+symbiotic-firewall = { path = "../symbiotic-firewall" }
+symbiotic-memory = { path = "../symbiotic-memory" }
+time = { version = "0.3", features = ["serde", "serde-well-known", "macros"] }
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+url.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }

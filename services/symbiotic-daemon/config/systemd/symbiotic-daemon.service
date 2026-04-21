@@ -1,0 +1,15 @@
+[Unit]
+Description=Symbiotic Nucleus Daemon
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=.
+EnvironmentFile=./config/.env.runtime
+EnvironmentFile=./config/.env.secrets
+ExecStart=/usr/local/bin/symbiotic-daemon serve --queue-file ./data/queue/jobs.state
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

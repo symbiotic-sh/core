@@ -1,0 +1,9 @@
+# Workspace clippy configuration.
+#
+# `too-many-arguments-threshold` raised from clippy's default of 7 because
+# several intentional public-API entry points in this codebase (daemon helpers,
+# archive event writers, observability snapshots) take 8-11 distinct, loosely-
+# related parameters with no natural grouping into a struct. The default
+# threshold is clippy-opinionated; the arg counts here reflect real surface
+# area, not accidental growth.
+too-many-arguments-threshold = 12

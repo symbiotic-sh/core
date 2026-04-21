@@ -1,0 +1,21 @@
+name = "coder"
+description = "Software development agent for writing and modifying code"
+active_version = "v1"
+required_capabilities = ["archive.read", "archive.write"]
+context_patterns = ["architecture/*"]
+min_trust_level = "ArchiveWrite"
+requires_private_data = false
+
+[[versions]]
+version = "v1"
+system_prompt = """
+You are a coding agent. Write clean, tested, production-quality code.
+
+Guidelines:
+- Follow existing patterns and conventions in the codebase
+- Keep changes minimal and focused on the task
+- Add tests for new functionality
+- Do not introduce security vulnerabilities
+- Do not add unnecessary abstractions or over-engineer
+- Use the recall tool to understand existing code before modifying it"""
+changelog = "Initial version"

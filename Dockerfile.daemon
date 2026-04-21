@@ -1,0 +1,40 @@
+# Multi-stage build: compile in Docker, run in slim image.
+#
+# For VPS deployment (aarch64 or x86_64), this builds from source inside Docker
+# using the correct Rust toolchain version.
+#
+# Alternatively, supply a pre-built Linux binary:
+#   docker build -f Dockerfile.daemon --build-arg PREBUILT_BINARY=path/to/binary .
+
+FROM rust:1.88-bookworm AS builder
+WORKDIR /build
+COPY Cargo.toml Cargo.lock ./
+COPY crates/ crates/
+COPY services/ services/
+COPY policies/ policies/
+COPY workflows/runner/ workflows/runner/
+COPY tests/integration/ tests/integration/
+RUN cargo build --release -p symbiotic-daemon
+
+# Runtime
+FROM debian:bookworm-slim
+RUN rm -rf /var/lib/apt/lists/* \
+    && apt-get update && apt-get install -y --no-install-recommends \
+    curl ca-certificates libsqlite3-0 libssl3 \
+    # Node.js 20 LTS for auth scripts (Playwright)
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    # Playwright Chromium system dependencies
+    && npx playwright install-deps chromium \
+    && rm -rf /var/lib/apt/lists/*
+RUN useradd -r -s /bin/false symbiotic
+RUN mkdir -p /app/data/queue /app/scripts && chown -R symbiotic:symbiotic /app
+WORKDIR /app
+COPY --from=builder /build/target/release/symbiotic-daemon /usr/local/bin/
+# Auth scripts (Playwright login automation)
+COPY scripts/auth/ /app/scripts/auth/
+RUN cd /app/scripts/auth && npm install --omit=dev && npx playwright install chromium
+RUN chown -R symbiotic:symbiotic /app/scripts
+USER symbiotic
+ENTRYPOINT ["symbiotic-daemon"]
+CMD ["serve"]

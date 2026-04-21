@@ -1,0 +1,123 @@
+services:
+  conduwuit:
+    image: matrixconduit/matrix-conduit:latest
+    volumes:
+      - conduwuit-data:/var/lib/matrix-conduit
+      - ./config/conduwuit.toml:/etc/conduwuit.toml:ro
+    environment:
+      CONDUIT_CONFIG: /etc/conduwuit.toml
+    ports:
+      - "127.0.0.1:8008:8008"
+    networks:
+      - symbiotic-net
+    restart: unless-stopped
+    # Conduit is a scratch/nix image — no shell, curl, or wget.
+    # Cannot run exec-based healthchecks inside it.
+
+  daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile.daemon
+    user: "0:0"
+    env_file:
+      - ./config/.env.runtime
+      - ./config/.env.secrets
+    volumes:
+      # Persistent daemon state (queue, goal artifacts, install artifacts)
+      - daemon-data:/app/data
+      # Persistent logs
+      - daemon-logs:/app/logs
+      # Writable host checkout for agent edits.
+      # This avoids empty named-volume workspaces and lets agents operate
+      # directly on the live repository mounted on the VPS.
+      - ./:/app/repo
+      # Read-only config and policy mounts
+      - ./domains:/app/domains:ro
+      - ./workflows:/app/workflows:ro
+      - ./policies:/app/policies:ro
+      - ./schemas:/app/schemas:ro
+      - ./config/agents:/app/config/agents:ro
+    secrets:
+      - symbiotic_matrix_password
+    depends_on:
+      conduwuit:
+        condition: service_started
+    networks:
+      - symbiotic-net
+    healthcheck:
+      test: ["CMD", "symbiotic-daemon", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["caddy"]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+      - ./config/Caddyfile:/etc/caddy/Caddyfile:ro
+    env_file:
+      - ./config/.env.runtime
+    depends_on:
+      conduwuit:
+        condition: service_started
+    networks:
+      - symbiotic-net
+    restart: unless-stopped
+
+  matrix-gateway:
+    image: cloudflare/cloudflared:latest
+    profiles: ["public"]
+    env_file:
+      - ./config/.env.secrets
+    command: tunnel --no-autoupdate run --token ${SYMBIOTIC_CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      conduwuit:
+        condition: service_started
+    networks:
+      - symbiotic-net
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "127.0.0.1:11434:11434"
+    networks:
+      - symbiotic-net
+    restart: unless-stopped
+    profiles:
+      - llm
+
+  ttyd:
+    image: tsl0922/ttyd:latest
+    profiles: ["display"]
+    command: ["ttyd", "--writable", "tmux", "new-session", "-A", "-s", "main"]
+    ports:
+      - "127.0.0.1:7681:7681"
+    networks:
+      - symbiotic-net
+    restart: unless-stopped
+
+volumes:
+  conduwuit-data:
+  daemon-data:
+  daemon-logs:
+  ollama-data:
+  caddy-data:
+  caddy-config:
+
+networks:
+  symbiotic-net:
+    driver: bridge
+
+secrets:
+  symbiotic_matrix_password:
+    file: ./config/.secrets/matrix_password

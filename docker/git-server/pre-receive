@@ -1,0 +1,32 @@
+#!/bin/sh
+set -eu
+
+callback_url="${AUTH_CALLBACK_URL:-http://host.docker.internal:${DAEMON_HTTP_PORT:-8090}/api/git/authorize}"
+repo_dir="$(basename "$(pwd)")"
+repo_id="${GIT_REPO_ID:-${repo_dir%.git}}"
+push_session="${HTTP_X_SYMBIOTIC_PUSH_SESSION:-}"
+
+if [ -z "$push_session" ]; then
+  echo "Push rejected: missing X-Symbiotic-Push-Session header" >&2
+  exit 1
+fi
+
+while read old new ref; do
+  branch="${ref#refs/heads/}"
+  payload="$(printf '{"repo_id":"%s","branch":"%s","old_sha":"%s","new_sha":"%s","push_session":"%s"}' \
+    "$repo_id" "$branch" "$old" "$new" "$push_session")"
+
+  result="$(curl -fsS -X POST "$callback_url" \
+    -H "Content-Type: application/json" \
+    -d "$payload")" || {
+    echo "Push rejected: authorization check failed" >&2
+    exit 1
+  }
+
+  allowed="$(printf '%s' "$result" | jq -r '.allowed // false')"
+  if [ "$allowed" != "true" ]; then
+    reason="$(printf '%s' "$result" | jq -r '.reason // "authorization denied"')"
+    echo "Push rejected: $reason" >&2
+    exit 1
+  fi
+done

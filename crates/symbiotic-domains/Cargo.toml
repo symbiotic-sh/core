@@ -1,0 +1,14 @@
+[package]
+name = "symbiotic-domains"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Domain queue storage and helpers for Symbiotic"
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+symbiotic-core = { path = "../symbiotic-core" }
+thiserror.workspace = true

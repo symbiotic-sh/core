@@ -1,0 +1,25 @@
+[package]
+name = "symbiotic-git-swarm"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Internal Git swarm: PR-based agent collaboration with branch protection"
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+bollard.workspace = true
+chrono.workspace = true
+futures.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+uuid.workspace = true
+symbiotic-trust = { path = "../symbiotic-trust" }
+
+[dev-dependencies]
+tempfile.workspace = true
+tokio = { workspace = true, features = ["full", "test-util"] }

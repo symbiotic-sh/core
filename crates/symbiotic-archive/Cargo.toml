@@ -1,0 +1,16 @@
+[package]
+name = "symbiotic-archive"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Persistent Archive storage for Symbiotic"
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+symbiotic-core = { path = "../symbiotic-core" }
+symbiotic-firewall = { path = "../symbiotic-firewall" }
+thiserror.workspace = true
+time = { version = "0.3", features = ["serde", "serde-well-known", "macros"] }

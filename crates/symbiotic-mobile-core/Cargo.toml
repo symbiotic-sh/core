@@ -1,0 +1,27 @@
+[package]
+name = "symbiotic-mobile-core"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Mobile FFI bridge for Symbiotic (Flutter via flutter_rust_bridge)"
+
+[lib]
+crate-type = ["staticlib", "cdylib", "lib"]
+
+[dependencies]
+symbiotic-client = { path = "../symbiotic-client" }
+flutter_rust_bridge = "=2.11.1"
+argon2 = "0.5"
+chacha20poly1305 = "0.10.1"
+rand.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints.rust]
+# FRB's #[frb] macro uses cfg(frb_expand) which only activates during codegen.
+unexpected_cfgs = { level = "allow", check-cfg = ['cfg(frb_expand)'] }

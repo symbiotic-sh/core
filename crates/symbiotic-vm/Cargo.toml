@@ -1,0 +1,24 @@
+[package]
+name = "symbiotic-vm"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "VM sandboxing for isolated agent execution in Symbiotic"
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+bollard.workspace = true
+futures.workspace = true
+tracing.workspace = true
+symbiotic-trust = { path = "../symbiotic-trust" }
+tokio.workspace = true
+uuid.workspace = true
+tar = "0.4"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["full", "test-util"] }
+tempfile.workspace = true

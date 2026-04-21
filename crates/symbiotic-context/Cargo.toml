@@ -1,0 +1,37 @@
+[package]
+name = "symbiotic-context"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Recall Gateway context retrieval and policy enforcement for Symbiotic"
+
+[features]
+integration = []
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+futures.workspace = true
+hex.workspace = true
+symbiotic-core = { path = "../symbiotic-core" }
+symbiotic-firewall = { path = "../symbiotic-firewall" }
+rand.workspace = true
+regex.workspace = true
+reqwest.workspace = true
+rusqlite.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+sqlite-vec.workspace = true
+thiserror.workspace = true
+tiktoken-rs.workspace = true
+time = { version = "0.3", features = ["serde", "serde-well-known", "macros"] }
+tokio.workspace = true
+tracing.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }

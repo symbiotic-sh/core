@@ -1,0 +1,39 @@
+[package]
+name = "credential-gateway"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Credential sandbox gateway and session handle manager for Symbiotic"
+
+[[bin]]
+name = "credential-gateway"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+symbiotic-core = { path = "../../crates/symbiotic-core" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+sha2.workspace = true
+rand.workspace = true
+url.workspace = true
+tokio.workspace = true
+reqwest.workspace = true
+async-trait.workspace = true
+chacha20poly1305.workspace = true
+data-encoding = "2"
+hmac = "0.12"
+oauth2.workspace = true
+sha1 = "0.10"
+xxhash-rust = { version = "0.8", features = ["xxh3"] }
+uuid.workspace = true
+wiremock = { workspace = true, optional = true }
+
+[features]
+integration = ["wiremock"]
+
+[dev-dependencies]
+tempfile.workspace = true

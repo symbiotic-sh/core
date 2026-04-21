@@ -1,0 +1,37 @@
+{
+  "id": "wf-intake",
+  "name": "intake-url",
+  "version": "1.0",
+  "inputs": {},
+  "policy": {
+    "sensitivity_max": "shareable",
+    "model_class": "local"
+  },
+  "steps": [
+    {
+      "id": "normalize",
+      "step_type": "intake.normalize",
+      "config": {}
+    },
+    {
+      "id": "dedupe",
+      "step_type": "intake.dedupe",
+      "config": {}
+    },
+    {
+      "id": "fetch",
+      "step_type": "ingest.fetch",
+      "config": {}
+    },
+    {
+      "id": "store",
+      "step_type": "archive.store",
+      "config": {}
+    },
+    {
+      "id": "review",
+      "step_type": "archive.review.enqueue",
+      "config": {}
+    }
+  ]
+}

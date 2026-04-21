@@ -1,0 +1,80 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/symbiotic-client",
+    "crates/symbiotic-core",
+    "crates/symbiotic-mobile-core",
+    "crates/symbiotic-archive",
+    "crates/symbiotic-agents",
+    "crates/symbiotic-agent-runner",
+    "crates/symbiotic-domains",
+    "crates/symbiotic-firewall",
+    "crates/symbiotic-intake",
+    "crates/symbiotic-metrics",
+    "crates/symbiotic-review",
+    "crates/symbiotic-cli",
+    "crates/symbiotic-matrix",
+    "crates/symbiotic-queue",
+    "crates/symbiotic-context",
+    "crates/symbiotic-trust",
+    "crates/symbiotic-skills",
+    "crates/symbiotic-memory",
+    "crates/symbiotic-browser",
+    "crates/symbiotic-vm",
+    "crates/symbiotic-git-swarm",
+    "crates/symbiotic-providers",
+    "crates/symbiotic-agent-config",
+    "services/credential-gateway",
+    "services/symbiotic-archeology-runner",
+    "services/symbiotic-daemon",
+    "crates/symbiotic-workflows",
+    "crates/symbiotic-control-plane",
+    "crates/symbiotic-push",
+    "crates/symbiotic-vault-store",
+    "tests/integration",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Symbiotic Contributors"]
+license = "LicenseRef-FSL-1.1-ALv2"
+repository = "https://github.com/symbiotic/symbiotic"
+
+[workspace.dependencies]
+# bytes >= 1.11.1 required to fix RUSTSEC-2026-0007
+bytes = "1.11.1"
+anyhow = "1.0"
+clap = { version = "4.6", features = ["derive", "env"] }
+hex = "0.4"
+rand = "0.10"
+regex = "1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+thiserror = "2.0"
+tiktoken-rs = "0.9"
+toml = "1.0"
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12", features = ["json"] }
+url = { version = "2.5", features = ["serde"] }
+async-trait = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+chrono-tz = "0.10"
+rusqlite = { version = "0.37", features = ["bundled-sqlcipher"] }
+tempfile = "3"
+uuid = { version = "1", features = ["v4", "serde"] }
+argon2 = "0.5"
+chacha20poly1305 = "0.10.1"
+matrix-sdk = { version = "0.16", features = ["e2e-encryption", "sqlite"] }
+oauth2 = "5.0.0"
+serde_yml = "0.0.12"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+futures = "0.3"
+wiremock = "0.6"
+axum = "0.8"
+tower-http = { version = "0.6", features = ["cors"] }
+sqlite-vec = "0.1.7"
+bollard = "0.18"
+walkdir = "2"

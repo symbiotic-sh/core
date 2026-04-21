@@ -1,0 +1,25 @@
+# Production Conduit config for VPS deployment.
+#
+# Copy to config/conduwuit.toml before starting services:
+#   cp config/conduwuit.production.toml config/conduwuit.toml
+#
+# The server_name is the base domain used in Matrix user IDs (@user:symbiotic.sh).
+# Clients connect via the public domain (matrix.symbiotic.sh) which Caddy proxies.
+# The .well-known delegation in the Caddyfile handles the mapping.
+
+[global]
+server_name = "symbiotic.sh"
+port = 8008
+address = "0.0.0.0"
+database_path = "/var/lib/matrix-conduit"
+database_backend = "rocksdb"
+
+# Enable registration for initial daemon self-registration.
+# IMPORTANT: Disable after bootstrap (set to false and restart).
+allow_registration = true
+allow_guest_registration = false
+
+log = "info"
+max_request_size = 20_000_000
+allow_federation = false
+trusted_servers = []

@@ -1,0 +1,32 @@
+# Local dev overrides — use with:
+#   docker compose -f docker-compose.vps.yml -f docker-compose.local.yml up -d --build
+#
+# Enables self-registration, unencrypted transport, and fixes healthcheck.
+
+services:
+  daemon:
+    user: "0:0"
+    env_file:
+      - ../../.env.test.local
+    environment:
+      SYMBIOTIC_BOOTSTRAP_SELF_REGISTER: "true"
+      SYMBIOTIC_MATRIX_ALLOW_UNENCRYPTED: "true"
+      SYMBIOTIC_ALLOW_OPEN_ACCESS: "true"
+      SYMBIOTIC_LOG_LEVEL: "symbiotic=debug,symbiotic_daemon=debug,info"
+      SYMBIOTIC_DEVICE_DISPLAY_NAME: "Symbiotic Nucleus (test)"
+      SYMBIOTIC_STALE_DEVICE_CLEANUP_DAYS: "1"
+      # Provider API keys come from env_file (../../.env.test.local).
+      # Do NOT re-declare them here — environment overrides env_file
+      # with empty strings when the host shell doesn't have them set.
+    # No 'status' subcommand exists yet — disable healthcheck for local dev
+    healthcheck:
+      test: ["CMD-SHELL", "true"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  ollama:
+    # Override profile to always start in local dev.
+    profiles: []
+    environment:
+      OLLAMA_NUM_PARALLEL: "1"

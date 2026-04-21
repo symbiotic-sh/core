@@ -1,0 +1,45 @@
+{
+  "cases": [
+    {
+      "id": "web-basic",
+      "kind": "url",
+      "url": "https://example.com/alpha",
+      "checks": [
+        "archive_record",
+        "review_record",
+        "content_contains:# fetched https://example.com/alpha"
+      ]
+    },
+    {
+      "id": "x-thread",
+      "kind": "url",
+      "url": "https://x.com/symbiotic/status/1234567890",
+      "checks": [
+        "archive_record",
+        "content_contains:X Thread by @symbiotic"
+      ]
+    },
+    {
+      "id": "note-vault",
+      "kind": "note",
+      "note": "password=supersecret",
+      "checks": [
+        "secure_routed",
+        "vault_record"
+      ]
+    },
+    {
+      "id": "bookmarks-api",
+      "kind": "bookmarks",
+      "source": "api",
+      "limit": 2,
+      "urls": [
+        "https://example.com/bookmark-one",
+        "https://x.com/bookmarks/status/42"
+      ],
+      "checks": [
+        "archive_record"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+target/
+.git/
+*.md
+docs/
+knowledge-base/
+legacy/
+data/
+apps/
+tests/integration/tests/
+tests/integration/src/
+.bootstrap-stages/
+.bootstrap.log

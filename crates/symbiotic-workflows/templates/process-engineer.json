@@ -1,0 +1,30 @@
+{
+  "id": "wf-process-engineer",
+  "name": "process-engineer",
+  "version": "1.0",
+  "inputs": {
+    "goal_type": "The goal type/template that was just completed",
+    "goal_run_id": "The run_id of the completed goal execution"
+  },
+  "policy": {
+    "sensitivity_max": "restricted",
+    "model_class": "cloud"
+  },
+  "steps": [
+    {
+      "id": "analyze",
+      "step_type": "agent.execute",
+      "config": {
+        "timeout_seconds": "600"
+      },
+      "agent_role": "process-engineer"
+    },
+    {
+      "id": "report",
+      "step_type": "goal.report",
+      "config": {
+        "timeout_seconds": "60"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+[package]
+name = "symbiotic-cli"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "CLI entrypoint for Symbiotic"
+
+[[bin]]
+name = "symbiotic"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+chrono.workspace = true
+clap.workspace = true
+symbiotic-agents = { path = "../symbiotic-agents" }
+symbiotic-archive = { path = "../symbiotic-archive" }
+symbiotic-daemon = { path = "../../services/symbiotic-daemon" }
+symbiotic-core = { path = "../symbiotic-core" }
+symbiotic-domains = { path = "../symbiotic-domains" }
+symbiotic-intake = { path = "../symbiotic-intake" }
+symbiotic-metrics = { path = "../symbiotic-metrics" }
+symbiotic-vault-store = { path = "../symbiotic-vault-store" }
+serde_json.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+uuid.workspace = true

@@ -1,0 +1,33 @@
+version: "3.9"
+services:
+  conduwuit:
+    image: conduwuit/conduwuit:latest
+    restart: unless-stopped
+    networks: [public-net]
+  symbiotic-daemon:
+    image: symbiotic/daemon:latest
+    restart: unless-stopped
+    env_file: [config/.env.runtime, config/.env.secrets]
+    depends_on: [conduwuit]
+    volumes:
+      - ./data:/app/data
+      - ./domains:/app/domains
+      - ./workflows:/app/workflows
+    networks: [public-net, agent-net]
+  access-broker:
+    image: symbiotic/access-broker:latest
+    restart: unless-stopped
+    networks: [public-net, agent-net]
+  credential-gateway:
+    image: symbiotic/credential-gateway:latest
+    restart: unless-stopped
+    env_file: [config/.env.runtime, config/.env.secrets]
+    volumes:
+      - ./data/vault:/app/data/vault
+    networks: [public-net, credential-net]
+networks:
+  public-net: {}
+  agent-net:
+    internal: true
+  credential-net:
+    internal: true

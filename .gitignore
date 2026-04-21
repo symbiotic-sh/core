@@ -1,0 +1,62 @@
+# Rust
+/target/
+/legacy/target/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local AI tool configs (personal preferences)
+CLAUDE.local.md
+.cursor/
+
+# Archive (knowledge-base/) articles (optional - uncomment to track)
+# knowledge-base/articles/
+knowledge-base/.obsidian/workspace.json
+
+# Data directory (indexes, embeddings)
+/data/
+*.output
+.kb-review-session/
+.playwright-mcp/
+
+# Flutter
+
+# Build artifacts
+**/target/
+
+# Runtime secrets
+config/.env.secrets
+config/.matrix-passwords
+config/.env.rooms
+config/.secret_matrix_password
+config/.secrets/
+services/symbiotic-daemon/config/.env.secrets
+
+# VPS bootstrap runtime state
+.bootstrap-rollback/
+.bootstrap-stages/
+.bootstrap.log
+services/symbiotic-daemon/data/
+services/symbiotic-daemon/docs/reports/install-verify.json
+
+# Debug session artifacts (screenshots, logs)
+.debug-session/
+
+# Local audit scratch artifacts
+docs/reports/_tmp_*.json
+docs/reports/install-secrets.md
+docs/reports/install-verify.json
+daemon.log
+
+# Config backups (may contain secrets)
+config/backups/
+
+# Claude Code project-local sub-agents and worktrees (IDE-only)
+.claude/

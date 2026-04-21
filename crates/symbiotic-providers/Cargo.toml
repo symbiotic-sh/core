@@ -1,0 +1,25 @@
+[package]
+name = "symbiotic-providers"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Multi-provider AI abstraction with metering, budgets, and sensitivity routing"
+
+[features]
+integration = []
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+symbiotic-core = { path = "../symbiotic-core" }
+thiserror.workspace = true
+tokio.workspace = true
+toml.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

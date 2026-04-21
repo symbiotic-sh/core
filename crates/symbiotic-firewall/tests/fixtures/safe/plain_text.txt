@@ -1,0 +1,2 @@
+This is a plain text note about the migration schedule for Q2.
+No special formatting, no inline HTML, no injection attempts.

@@ -1,0 +1,26 @@
+[package]
+name = "symbiotic-archeology-runner"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "In-container runner for the Source Archeology pipeline (T128 §13b)"
+
+[[bin]]
+name = "symbiotic-archeology-runner"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+clap.workspace = true
+reqwest = { workspace = true, features = ["json"] }
+serde.workspace = true
+serde_json.workspace = true
+symbiotic-agents = { path = "../../crates/symbiotic-agents" }
+symbiotic-core = { path = "../../crates/symbiotic-core" }
+tokio = { workspace = true, features = ["full"] }
+tracing.workspace = true
+tracing-subscriber = { workspace = true, features = ["env-filter"] }
+uuid.workspace = true

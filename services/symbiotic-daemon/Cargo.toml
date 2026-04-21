@@ -1,0 +1,68 @@
+[package]
+name = "symbiotic-daemon"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Nucleus daemon runtime for Symbiotic MVP"
+
+[[bin]]
+name = "symbiotic-daemon"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+clap.workspace = true
+tokio.workspace = true
+credential-gateway = { path = "../credential-gateway" }
+symbiotic-core = { path = "../../crates/symbiotic-core" }
+symbiotic-context = { path = "../../crates/symbiotic-context" }
+symbiotic-providers = { path = "../../crates/symbiotic-providers" }
+symbiotic-archive = { path = "../../crates/symbiotic-archive" }
+symbiotic-firewall = { path = "../../crates/symbiotic-firewall" }
+time = { version = "0.3", features = ["serde", "serde-well-known", "macros"] }
+symbiotic-review = { path = "../../crates/symbiotic-review" }
+symbiotic-domains = { path = "../../crates/symbiotic-domains" }
+symbiotic-agent-config = { path = "../../crates/symbiotic-agent-config" }
+symbiotic-agents = { path = "../../crates/symbiotic-agents" }
+symbiotic-agent-runner = { path = "../../crates/symbiotic-agent-runner" }
+symbiotic-vm = { path = "../../crates/symbiotic-vm" }
+symbiotic-intake = { path = "../../crates/symbiotic-intake" }
+symbiotic-memory = { path = "../../crates/symbiotic-memory" }
+symbiotic-matrix = { path = "../../crates/symbiotic-matrix" }
+symbiotic-queue = { path = "../../crates/symbiotic-queue" }
+symbiotic-skills = { path = "../../crates/symbiotic-skills" }
+symbiotic-trust = { path = "../../crates/symbiotic-trust" }
+symbiotic-vault-store = { path = "../../crates/symbiotic-vault-store" }
+symbiotic-control-plane = { path = "../../crates/symbiotic-control-plane" }
+symbiotic-push = { path = "../../crates/symbiotic-push" }
+symbiotic-git-swarm = { path = "../../crates/symbiotic-git-swarm" }
+symbiotic-workflows = { path = "../../crates/symbiotic-workflows" }
+log = "0.4"
+tracing.workspace = true
+env_logger = "0.11"
+tracing-subscriber.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+serde_yml.workspace = true
+toml.workspace = true
+hex.workspace = true
+sha2.workspace = true
+rusqlite.workspace = true
+url.workspace = true
+reqwest = { workspace = true, features = ["blocking"] }
+tokio-tungstenite = { version = "0.24", features = ["native-tls"] }
+futures.workspace = true
+thiserror.workspace = true
+axum.workspace = true
+tower-http.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+chrono-tz.workspace = true
+tempfile.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+tower = "0.5"
+wiremock.workspace = true

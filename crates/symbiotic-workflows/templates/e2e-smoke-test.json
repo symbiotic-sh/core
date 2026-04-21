@@ -1,0 +1,27 @@
+{
+  "id": "wf-e2e-smoke-test",
+  "name": "e2e-smoke-test",
+  "version": "1.0",
+  "inputs": {},
+  "policy": {
+    "sensitivity_max": "shareable",
+    "model_class": "hybrid"
+  },
+  "steps": [
+    {
+      "id": "smoke",
+      "step_type": "agent.execute",
+      "config": {
+        "timeout_seconds": "120"
+      },
+      "agent_role": "researcher"
+    },
+    {
+      "id": "report",
+      "step_type": "goal.report",
+      "config": {
+        "timeout_seconds": "30"
+      }
+    }
+  ]
+}
