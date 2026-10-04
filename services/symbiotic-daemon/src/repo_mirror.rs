@@ -495,13 +495,7 @@ pub async fn mirror_push_with_approval(
         .arg(&ref_name)
         .output()
         .ok()
-        .and_then(|out| {
-            if out.status.success() {
-                Some(out)
-            } else {
-                None
-            }
-        })
+        .filter(|out| out.status.success())
         .and_then(|out| {
             String::from_utf8_lossy(&out.stdout)
                 .trim()

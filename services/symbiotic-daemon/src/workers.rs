@@ -1099,7 +1099,7 @@ impl StepExecutor for AgentExecuteExecutor {
         let output_key = format!("{}_status", step.id);
         outputs.insert(output_key.clone(), "running".to_string());
 
-        let agent_id = format!("agent_{}_{}", role, &ctx.run_id);
+        let agent_id = format!("agent_{}_{}", role, ctx.run_id);
         outputs.insert(format!("{}_agent_id", step.id), agent_id.clone());
         outputs.insert(format!("{}_role", step.id), role.to_string());
 
@@ -2068,8 +2068,8 @@ impl StepExecutor for GoalReportExecutor {
 
         // Collect all agent step results from the context.
         let mut report_lines = vec![
-            format!("# Self-Improve Report"),
-            format!(""),
+            "# Self-Improve Report".to_string(),
+            String::new(),
             format!("**Run ID:** {}", ctx.run_id),
             format!("**Workflow:** {}", ctx.workflow_id),
             String::new(),

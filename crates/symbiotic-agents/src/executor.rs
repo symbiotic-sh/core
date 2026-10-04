@@ -1098,6 +1098,7 @@ mod tests {
             identity_context: None,
             handoff_dir: Some(tmp.path().to_path_buf()),
             agent_id: Some("test-agent-42".to_string()),
+            role: None,
             redact_output: false,
         };
 
@@ -1202,6 +1203,7 @@ mod tests {
             identity_context: Some("# SOUL\nYou are Symbiotic.".to_string()),
             handoff_dir: None,
             agent_id: None,
+            role: None,
             redact_output: false,
         };
 

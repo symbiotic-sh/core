@@ -149,10 +149,10 @@ impl RecallBackend for DaemonRecallBackend {
                     // reverse check, those longer queries returned nothing
                     // because the id is obviously not a superstring of the
                     // whole query.
-                    let id_match = id_lower.contains(&query_lower)
-                        || query_lower.contains(&id_lower);
-                    let title_match = title_lower.contains(&query_lower)
-                        || query_lower.contains(&title_lower);
+                    let id_match =
+                        id_lower.contains(&query_lower) || query_lower.contains(&id_lower);
+                    let title_match =
+                        title_lower.contains(&query_lower) || query_lower.contains(&title_lower);
                     let content_match = content_lower.contains(&query_lower);
 
                     if !id_match && !title_match && !content_match {

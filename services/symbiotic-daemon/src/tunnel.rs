@@ -343,7 +343,7 @@ async fn proxy_to_conduwuit(
     conduwuit_url: &str,
     req: &TunnelRequest,
 ) -> Result<TunnelResponse, TunnelError> {
-    let url = format!("{}{}", conduwuit_url.trim_end_matches('/'), &req.path);
+    let url = format!("{}{}", conduwuit_url.trim_end_matches('/'), req.path);
 
     let method: reqwest::Method = req
         .method

@@ -260,11 +260,7 @@ fn is_junk(fact_text: &str, _source_text: &str) -> bool {
     }
 
     // Status updates that are transient
-    if lowered.starts_with("step ") && lowered.contains("of ") && lowered.contains("completed") {
-        return true;
-    }
-
-    false
+    lowered.starts_with("step ") && lowered.contains("of ") && lowered.contains("completed")
 }
 
 /// Detect if two fact texts are direct contradictions.
