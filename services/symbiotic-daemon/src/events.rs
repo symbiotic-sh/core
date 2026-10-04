@@ -720,6 +720,59 @@ fn auth_body_from_detail(detail: &str, fallback: &str) -> String {
     }
 }
 
+/// Request to create a Matrix room for a thread. Produced by sync command
+/// handlers (e.g. `UxClass::Goal`), consumed by the async pump loop.
+#[derive(Debug, Clone)]
+pub struct RoomCreationRequest {
+    pub thread_slug: String,
+    pub thread_title: String,
+    pub goal_id: String,
+}
+
+/// A point-in-time snapshot of the daemon's queue state.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DaemonStatusSnapshot {
+    pub queued: usize,
+    pub running: usize,
+    pub failed: usize,
+    pub done: usize,
+    pub dlq: usize,
+    pub timestamp: u64,
+}
+
+/// A `MatrixEventEnvelope` bound to a specific room.
+#[derive(Debug, Clone, PartialEq)]
+pub struct RoutedMatrixEnvelope {
+    pub room_id: String,
+    pub envelope: MatrixEventEnvelope,
+}
+
+/// FNV-1a-style hash for deterministic ID generation.
+pub(crate) fn simple_hash(input: &str) -> u64 {
+    let mut acc = 1469598103934665603u64;
+    for byte in input.bytes() {
+        acc ^= byte as u64;
+        acc = acc.wrapping_mul(1099511628211u64);
+    }
+    acc
+}
+
+/// Extract the first meaningful line from markdown content as a title.
+/// Strips leading heading markers (`#`) and caps at 120 characters.
+pub(crate) fn extract_title_from_markdown(content: &str) -> Option<String> {
+    for line in content.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let title = trimmed.trim_start_matches('#').trim();
+        if !title.is_empty() {
+            return Some(title.chars().take(120).collect());
+        }
+    }
+    None
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1300,57 +1353,4 @@ mod tests {
         assert_eq!(status, Status::Success);
         assert!(body.contains("split it"));
     }
-}
-
-/// Request to create a Matrix room for a thread. Produced by sync command
-/// handlers (e.g. `UxClass::Goal`), consumed by the async pump loop.
-#[derive(Debug, Clone)]
-pub struct RoomCreationRequest {
-    pub thread_slug: String,
-    pub thread_title: String,
-    pub goal_id: String,
-}
-
-/// A point-in-time snapshot of the daemon's queue state.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct DaemonStatusSnapshot {
-    pub queued: usize,
-    pub running: usize,
-    pub failed: usize,
-    pub done: usize,
-    pub dlq: usize,
-    pub timestamp: u64,
-}
-
-/// A `MatrixEventEnvelope` bound to a specific room.
-#[derive(Debug, Clone, PartialEq)]
-pub struct RoutedMatrixEnvelope {
-    pub room_id: String,
-    pub envelope: MatrixEventEnvelope,
-}
-
-/// FNV-1a-style hash for deterministic ID generation.
-pub(crate) fn simple_hash(input: &str) -> u64 {
-    let mut acc = 1469598103934665603u64;
-    for byte in input.bytes() {
-        acc ^= byte as u64;
-        acc = acc.wrapping_mul(1099511628211u64);
-    }
-    acc
-}
-
-/// Extract the first meaningful line from markdown content as a title.
-/// Strips leading heading markers (`#`) and caps at 120 characters.
-pub(crate) fn extract_title_from_markdown(content: &str) -> Option<String> {
-    for line in content.lines() {
-        let trimmed = line.trim();
-        if trimmed.is_empty() {
-            continue;
-        }
-        let title = trimmed.trim_start_matches('#').trim();
-        if !title.is_empty() {
-            return Some(title.chars().take(120).collect());
-        }
-    }
-    None
 }

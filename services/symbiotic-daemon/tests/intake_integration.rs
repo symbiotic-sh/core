@@ -252,12 +252,10 @@ fn apply_checks(
 }
 
 fn drain_queue(daemon: &SymbioticDaemon, max_iterations: usize) -> Result<()> {
-    let mut now = now_unix();
-    for _ in 0..max_iterations {
+    for now in (now_unix()..).take(max_iterations) {
         if daemon.run_once(now)?.is_none() {
             return Ok(());
         }
-        now += 1;
     }
     Err(anyhow!(
         "queue did not drain after {max_iterations} iterations"

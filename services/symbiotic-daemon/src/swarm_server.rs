@@ -1806,7 +1806,7 @@ fn distillery_vm_env(
         format!("PR_ID={pr_id}"),
         format!("CHECK_NAME={DISTILLERY_CHECK_NAME}"),
         format!("SYMBIOTIC_SOCKET={socket_path}"),
-        format!("DISTILLERY_MODE=post-merge"),
+        "DISTILLERY_MODE=post-merge".to_string(),
         format!("MERGED_PR_ID={pr_id}"),
         format!("MERGED_SHA={merged_sha}"),
         format!("SWARM_BASE_BRANCH={base_branch}"),

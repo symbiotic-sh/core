@@ -1150,7 +1150,7 @@ mod tests {
                 id: format!("m{i}"),
                 content: format!("Fact {i}"),
                 sensitivity: Sensitivity::Shareable,
-                evidence: vec![format!("archive:a")],
+                evidence: vec!["archive:a".to_string()],
                 updated_at: None,
                 archived: false,
                 fsrs: None,

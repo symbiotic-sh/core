@@ -149,10 +149,8 @@ fn scan_markdown_images(input: &str) -> Vec<String> {
 
 fn extract_host(url: &str) -> Option<String> {
     // Minimal scheme-aware parse: `scheme://host[:port]/path`.
-    let after_scheme = match url.find("://") {
-        Some(idx) => &url[idx + 3..],
-        None => return None, // relative URL, no host
-    };
+    // A relative URL has no host.
+    let after_scheme = &url[url.find("://")? + 3..];
     let end = after_scheme
         .find(['/', '?', '#'])
         .unwrap_or(after_scheme.len());

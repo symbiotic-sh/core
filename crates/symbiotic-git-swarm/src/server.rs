@@ -161,7 +161,7 @@ impl GitServerManager {
             image: Some(self.config.git_server_image.clone()),
             host_config: Some(host_config),
             env: Some(vec![
-                format!("GIT_HTTP_EXPORT_ALL=1"),
+                "GIT_HTTP_EXPORT_ALL=1".to_string(),
                 format!("REPOS_PATH={}", self.config.repos_base_path),
                 format!(
                     "DAEMON_HTTP_PORT={}",

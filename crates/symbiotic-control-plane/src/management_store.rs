@@ -59,7 +59,7 @@ impl ManagementStore {
             .filter(|item| item.initiative_id.as_deref() == Some(initiative_id))
             .cloned()
             .collect();
-        items.sort_by(|a, b| b.updated_at.cmp(&a.updated_at));
+        items.sort_by_key(|a| std::cmp::Reverse(a.updated_at));
         items
     }
 
@@ -70,13 +70,13 @@ impl ManagementStore {
             .filter(|item| item.parent_work_item_id.as_deref() == Some(parent_work_item_id))
             .cloned()
             .collect();
-        items.sort_by(|a, b| b.updated_at.cmp(&a.updated_at));
+        items.sort_by_key(|a| std::cmp::Reverse(a.updated_at));
         items
     }
 
     pub fn work_items(&self) -> Vec<WorkItem> {
         let mut items: Vec<WorkItem> = self.work_items.values().cloned().collect();
-        items.sort_by(|a, b| b.updated_at.cmp(&a.updated_at));
+        items.sort_by_key(|a| std::cmp::Reverse(a.updated_at));
         items
     }
 

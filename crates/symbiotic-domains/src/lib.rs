@@ -116,7 +116,7 @@ impl DomainQueueStore {
                 tasks.extend(read_queue(&paths.backlog_file)?.tasks);
             }
         }
-        tasks.sort_by(|a, b| (a.priority, a.created_at).cmp(&(b.priority, b.created_at)));
+        tasks.sort_by_key(|a| (a.priority, a.created_at));
         Ok(tasks)
     }
 

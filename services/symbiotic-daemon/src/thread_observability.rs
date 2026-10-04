@@ -623,7 +623,7 @@ pub(crate) fn derive_thread_observability_snapshot(
         &matching_goals,
         management_store,
     ));
-    updates.sort_by(|a, b| b.created_at.cmp(&a.created_at));
+    updates.sort_by_key(|a| std::cmp::Reverse(a.created_at));
     updates.truncate(8);
     let chatter = derive_thread_chatter(thread_id, &matching_goals, interaction_log_store);
     let agent_logs = derive_thread_agent_logs(thread_id, &matching_goals, agent_runtime_log_store);
@@ -942,7 +942,7 @@ fn derive_archive_goal_updates(
         }
     }
 
-    updates.sort_by(|a, b| b.created_at.cmp(&a.created_at));
+    updates.sort_by_key(|a| std::cmp::Reverse(a.created_at));
     updates.truncate(8);
     updates
 }
@@ -1037,7 +1037,7 @@ fn derive_thread_artifacts(
         })
         .collect();
     artifacts.extend(fallback);
-    artifacts.sort_by(|a, b| b.updated_at.cmp(&a.updated_at));
+    artifacts.sort_by_key(|a| std::cmp::Reverse(a.updated_at));
     artifacts.truncate(8);
     artifacts
 }
