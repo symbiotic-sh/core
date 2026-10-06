@@ -214,3 +214,7 @@ Planned: agent marketplace.
 
 - Waitlist: [symbiotic.sh/#access](https://symbiotic.sh/#access)
 - Org: [github.com/symbiotic-sh](https://github.com/symbiotic-sh)
+
+## Working on this repository
+
+This repository uses [House Rules](https://github.com/jak-pan/house-rules) as the base rules for agentic work, and Warden, our review service, reviews its pull requests on request. If you work here, with or without an agent, follow House Rules too. This repository's own rules, including any that tighten or loosen House Rules, are in [AGENTS.md](AGENTS.md).
